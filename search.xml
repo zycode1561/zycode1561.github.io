@@ -719,33 +719,6 @@
     
     
     <entry>
-      <title>idea部署halo遇到的问题总结</title>
-      <link href="/2019/11/06/idea%E9%83%A8%E7%BD%B2halo%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93/"/>
-      <url>/2019/11/06/idea%E9%83%A8%E7%BD%B2halo%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93/</url>
-      
-        <content type="html"><![CDATA[<h2 id="git下载"><a href="#git下载" class="headerlink" title="git下载"></a>git下载</h2><p>首先进入git官网，搜索halo，点击第一个（star最多的那个），进入页面后点击右边绿色的clone and Download，复制git地址，打开终端，输入</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd  进入你想要保存项目的文件夹</span><br><span class="line">git clone  url(复制的地址）</span><br></pre></td></tr></table></figure><p>当然，首先你要有一个git账号，电脑上也已经配置了git，并且学会一些git 的基本语法，具体的可以去百度。</p><h2 id="导入工程"><a href="#导入工程" class="headerlink" title="导入工程"></a>导入工程</h2><p>打开IntelliJ IDEA，点击import project<br><img alt="在这里插入图片描述" data-src="https://img-blog.csdnimg.cn/20191031103454598.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwOTQ0MjQx,size_16,color_FFFFFF,t_70" class="lazyload"><br>进入halo所在文件夹的目录，选择halo，点击open<br>然后选择Gradle<br><img alt="在这里插入图片描述" data-src="https://img-blog.csdnimg.cn/20191031103722124.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwOTQ0MjQx,size_16,color_FFFFFF,t_70" class="lazyload"><br>这里我因为提前导入并且更新了idea版本（这是个坑）所以直接finish，如果是2018的idea，会弹出第二个界面。<br>在第二个界面选中Use auto-import，其他的不用动，点击Finish<br>进入项目后会直接进行导入，这时候我就出现了很多问题。<br>进入之后还要下载Lombok插件，不然导入完成后还是会报错，具体方法可以百度。</p><h2 id="出现的问题一"><a href="#出现的问题一" class="headerlink" title="出现的问题一"></a>出现的问题一</h2><p>由于当时网络不给力，在一个地方卡了30来分钟，我就把加载终止重新启动，然后。。。<br>在我第二次加载项目的时候，出现了以下错误</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Cause: invalid type code: 8C</span><br></pre></td></tr></table></figure><p>作为一名大学生，看到这个错误的我一脸懵逼，去百度根本没有跟我一样错误的大佬，无奈，删除halo，重新git clone，然后我惊奇的发现第二次clone下载速度会变慢（不知道哪位大佬可以解释一下），所以记得捣鼓之前先备份哈哈 ，重新导入，接着又出现了另一个问题。。。</p><h2 id="出现的问题二"><a href="#出现的问题二" class="headerlink" title="出现的问题二"></a>出现的问题二</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Cause: invalid type code: DB</span><br></pre></td></tr></table></figure><p>这。。。8C换DB，我觉得不是我上次强制退出的原因了，然后我把他的gradle换成了使用我本地的5.6.3版本的gradle，同时修改gradle.wrapper.gradle-wrapper.properties这个文件中的版本号，然后终于不是这种type code 的问题了。</p><h2 id="出现的问题三"><a href="#出现的问题三" class="headerlink" title="出现的问题三"></a>出现的问题三</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Idea Failed to notify build listener.</span><br></pre></td></tr></table></figure><p>又看到了一个问题，啥都不说直接度娘，说是gradle版本太高而IDEA版本太低的缘故，于是再次把gradle的版本降低到4.7，再次导入，还是这个错误，好的继续降低版本，当我降低到3版本的时候，他提示版本太低应该使用4.4 or later 版本，我又懵逼了。</p><h2 id="最终解决办法"><a href="#最终解决办法" class="headerlink" title="最终解决办法"></a>最终解决办法</h2><p>经历了一个下午的折腾，我心态崩了，然后想着一不做二不休，直接装最新版的IDEA，去官网下载了最新版的IDEA，因为之前下载错误下载的是2018.1.5（现在最新的是2019.3.*），打开直接导入备份，直接成功。。。</p><p>我太难了。。。</p><h2 id="最后总结"><a href="#最后总结" class="headerlink" title="最后总结"></a>最后总结</h2><p>IDEA版本跟gradle版本挂钩这个真的是太坑了，一定要记得升级最新版本的IDEA，升级的时候还可以保留你原来的文件和设置，很贴心。<br>最后，小白第一次写文章，有很多不足之处，把自己踩过的坑跟大家分享一下，加油学习！</p>]]></content>
-      
-      
-      <categories>
-          
-          <category> halo </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> halo </tag>
-            
-            <tag> problems </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>算法设计与分析案例代码总结(一)：分治法</title>
       <link href="/2019/11/05/%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90%E6%A1%88%E4%BE%8B%E4%BB%A3%E7%A0%81%E6%80%BB%E7%BB%93(%E4%B8%80)%EF%BC%9A%E5%88%86%E6%B2%BB%E6%B3%95/"/>
       <url>/2019/11/05/%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90%E6%A1%88%E4%BE%8B%E4%BB%A3%E7%A0%81%E6%80%BB%E7%BB%93(%E4%B8%80)%EF%BC%9A%E5%88%86%E6%B2%BB%E6%B3%95/</url>
