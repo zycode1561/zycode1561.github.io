@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>Redis简单介绍和入门</title>
+      <link href="/2020/02/09/Redis%E7%AE%80%E5%8D%95%E4%BB%8B%E7%BB%8D%E5%92%8C%E5%85%A5%E9%97%A8/"/>
+      <url>/2020/02/09/Redis%E7%AE%80%E5%8D%95%E4%BB%8B%E7%BB%8D%E5%92%8C%E5%85%A5%E9%97%A8/</url>
+      
+        <content type="html"><![CDATA[<h1 id="Redis简单介绍和入门"><a href="#Redis简单介绍和入门" class="headerlink" title="Redis简单介绍和入门"></a>Redis简单介绍和入门</h1><h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><p>redis是一款高性能的NOSQL系列的非关系型数据库。</p><p>关系型数据库：MySQL，Oracle…</p><ul><li>数据之间有关联关系</li><li>数据存储在键盘的文件上</li></ul><p>非关系型数据库：redis,hbase</p><ul><li>存储 key:value</li><li>数据之间没有关联关系</li><li>数据存储在内存中</li></ul><h2 id="NOSQL和关系型数据库比较"><a href="#NOSQL和关系型数据库比较" class="headerlink" title="NOSQL和关系型数据库比较"></a>NOSQL和关系型数据库比较</h2><p>优点：</p><ul><li>低成本：NOSQL数据库简单易部署，基本都是开源软件，不需要像使用Oracle那样花费大量成本购买使用，相比关系型数据库价格更便宜。</li><li>查询速度：NOSQL数据库将数据存储与缓存之中，关系型数据库将数据存储在硬盘中，自然查询速度远不及NOSQL数据库。</li><li>存储数据的格式：NOSQL的存储格式是，key-value形式，文档形式，图片形式等，所以可以存储基础类型以及对象或者是集合等各种格式，而数据库则只支持基础类型。</li><li>扩展性：关系型数据库有类似join这样的多表查询机制的限制导致扩展很难。</li></ul><p>缺点：</p><ul><li>维护的工具和资料有限，因为NOSQL是属于新的技术，不能和关系型数据库十几年的技术同日而语</li><li>不提供对sql的支持，如果不支持sql这样的工业标准，将产生一定用户的学习和使用成本。</li><li>不提供关系型数据库对事务的处理。</li></ul><h3 id="非关系型数据库的优势"><a href="#非关系型数据库的优势" class="headerlink" title="非关系型数据库的优势"></a>非关系型数据库的优势</h3><ul><li>性能NOSQL是给予键值对的，可以想象成表中的主键和值的对应关系，而且不需要经过SQL层的解析，所以性能非常高。</li><li>可扩展性同样也是因为基于键值对，数据之间没有耦合性，所以非常容易水平扩展。</li></ul><h3 id="关系型数据库的优势"><a href="#关系型数据库的优势" class="headerlink" title="关系型数据库的优势"></a>关系型数据库的优势</h3><ul><li>复杂查询可以用SQL语句方便的在一个表以及多个表之间做非常复杂的数据查询</li><li>事务支持使得对于安全性能很高的数据访问要求得以实现。</li></ul><h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>关系型数据库与非关系型数据库并非对立而是互补的关系，即通常情况下使用关系型数据库，在适合使用nosql的时候使用NOSQL数据库，让NOSQL数据库对关系型数据库的不足进行弥补。一般会将数据存储在关系型数据库中，在nosql的数据库中备份存储关系型数据库的数据。</p><h2 id="什么是Redis"><a href="#什么是Redis" class="headerlink" title="什么是Redis"></a>什么是Redis</h2><p>Redis是用C语言开发的一个开源的高性能键值对数据库，官方提供测试数据，50个并发执行100000个请求，读的速度是110000次/s，写的速度是81000次/s，且Redis通过提供多种键值数据类型来适应不同场景下的存储需求，目前为止Redis支持的键值数据类型如下：</p><ul><li>字符串类型 string</li><li>哈希类型 hash</li><li>列表类型 list</li><li>集合类型 set</li><li>有序集合类型 sortedset</li></ul><h3 id="应用场景"><a href="#应用场景" class="headerlink" title="应用场景"></a>应用场景</h3><ul><li>缓存(数据查询、短连接、新闻内容、商品内容等)</li><li>聊天室的在线好友列表</li><li>任务队列(秒杀，抢购，12306)</li><li>应用排行榜</li><li>网站访问统计</li><li>数据过期处理(可以精确到毫秒)</li><li>分布式集群架构中的session分离</li></ul><h2 id="命令操作"><a href="#命令操作" class="headerlink" title="命令操作"></a>命令操作</h2><p>redis的数据结构：redis存储的是key-value格式的数据，其中key都是字符串，value有五种不同的数据结构</p><h3 id="字符串类型-string"><a href="#字符串类型-string" class="headerlink" title="字符串类型 string"></a>字符串类型 string</h3><ul><li>存储： set key value</li><li>获取： get key</li><li>删除： del key</li></ul><h3 id="哈希类型-hash"><a href="#哈希类型-hash" class="headerlink" title="哈希类型 hash"></a>哈希类型 hash</h3><ul><li>存储： hset key field value</li><li>获取： hget key field</li><li>删除： hdel key field</li></ul><p><img alt data-src="https://tva1.sinaimg.cn/large/0082zybply1gbq0qakfwsj30x20kathd.jpg" class="lazyload"></p><h3 id="列表类型-list"><a href="#列表类型-list" class="headerlink" title="列表类型 list"></a>列表类型 list</h3><p>可以添加一个元素到列表的头部(左边)或者尾部(右边)。</p><ul><li>添加：<ul><li>lpush key value：将元素加入列表左边</li><li>rpush key value：将元素加入列表右边</li></ul></li><li>获取：<ul><li>lrange key start end：范围获取</li></ul></li><li>删除：<ul><li>lpop key：删除列表最左边的元素，并将元素返回</li><li>rpop key：删除列表最右边的元素，并将元素返回</li></ul></li></ul><h3 id="集合类型-set：不允许重复元素"><a href="#集合类型-set：不允许重复元素" class="headerlink" title="集合类型 set：不允许重复元素"></a>集合类型 set：不允许重复元素</h3><ul><li>存储：sadd key value</li><li>获取：smembers key：获取set集合中的所有元素</li><li>删除：srem key value：删除set集合中的某个元素</li></ul><h3 id="有序集合类型-sortedset：不允许重复元素，且元素有顺序"><a href="#有序集合类型-sortedset：不允许重复元素，且元素有顺序" class="headerlink" title="有序集合类型 sortedset：不允许重复元素，且元素有顺序"></a>有序集合类型 sortedset：不允许重复元素，且元素有顺序</h3><p>每个元素都会关联一个double类型的分数，redis通过这个分数进行排序</p><ul><li>存储：zadd key score value</li><li>获取： zrange key start end</li><li>删除： zrem key value</li></ul><h3 id="通用命令"><a href="#通用命令" class="headerlink" title="通用命令"></a>通用命令</h3><ul><li>keys * ：查看所有的键</li><li>type key ：获取键对应的value类型</li><li>del key：删除指定的key-value</li></ul><h2 id="持久化"><a href="#持久化" class="headerlink" title="持久化"></a>持久化</h2><p>redis是一个内存数据库，当redis服务器重启或者电脑重启，数据会丢失，我们可以将redis内存中的数据持久化保存到硬盘的文件中。</p><p>redis持久化机制：</p><ul><li>RDB：默认方式，不需要进行配置，默认就是用这种机制<ul><li>在一定的间隔实践中，检测key的变化情况，然后持久化数据。</li></ul></li><li>AOF：日志记录的方式，可以记录每一条命令的操作，可以每一次命令操作后，持久化数据。</li></ul><p>配置文件，redis.conf</p><p><img alt data-src="https://tva1.sinaimg.cn/large/0082zybply1gbq1lwkrikj30x20kajup.jpg" class="lazyload"></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> Redis </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Redis </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>JavaScript基础</title>
       <link href="/2020/02/02/JavaScript%E5%9F%BA%E7%A1%80/"/>
       <url>/2020/02/02/JavaScript%E5%9F%BA%E7%A1%80/</url>
