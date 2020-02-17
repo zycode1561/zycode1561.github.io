@@ -4,6 +4,25 @@
   
     
     <entry>
+      <title>Elasticsearch简介</title>
+      <link href="/2020/02/17/Elasticsearch%E7%AE%80%E4%BB%8B/"/>
+      <url>/2020/02/17/Elasticsearch%E7%AE%80%E4%BB%8B/</url>
+      
+        <content type="html"><![CDATA[<h1 id="Elasticsearch简介"><a href="#Elasticsearch简介" class="headerlink" title="Elasticsearch简介"></a>Elasticsearch简介</h1><h2 id="什么是Elasticsearch"><a href="#什么是Elasticsearch" class="headerlink" title="什么是Elasticsearch"></a>什么是Elasticsearch</h2><p>&emsp;Elasticsearch是一个开源的分布式、RESTful风格的搜索和数据分析引擎，他的底层是开源库Apache Lucene。</p><p>&emsp;Lucene可以说是当下最先进、高性能、全功能的搜索引擎库——无论是开源还是私有，但它也仅仅只是一个库。为了充分发挥其功能，你需要使用Java并将Lucene直接集成到应用程序中。为了解决使用其的繁复性，Elasticsearch便应运而生。它使用Java编写，内部采用Lucene做索引与搜索，但是它的目标是使全文检索变得更简单，简单来说，就是对Lucene做了一层封装，它提供了一套简单一致的API来帮助我们实现存储和检索。</p><p>&emsp;当然，Elasticsearch不仅仅是Lucene，并且也不仅仅只是一个全文搜索引擎。他可以被下面这样准确的形容：</p><ul><li>一个分布式的实时文档存储，每个字段可以被索引与搜索；</li><li>一个分布式实时分析搜索引擎；</li><li>能胜任上百个服务节点的扩展，并支持PB级别的结构化或者非机构化的数据</li></ul><p>Kibana是一个开源的分析和可视化平台，旨在与Elasticsearch合作。Kibana提供搜索、查看和与存储在Elasticsearch索引中的数据进行交互的功能。开发或者运维人员可以轻松的执行高级数据分析，并在各种图表、表格和地图中可视化数据</p><h2 id="Elasticsearch基本概念"><a href="#Elasticsearch基本概念" class="headerlink" title="Elasticsearch基本概念"></a>Elasticsearch基本概念</h2><h3 id="全文搜索（Full-text-Search"><a href="#全文搜索（Full-text-Search" class="headerlink" title="全文搜索（Full-text Search)"></a>全文搜索（Full-text Search)</h3><p>全文检索是指计算机索引程序通过扫描文章中的每一个词，对每一个词建立一个索引，指明该词在文章中出现的次数和位置，当用户查询时，检索程序就根据实现建立的索引位置进行查找，并将查找的结果反馈给用户的检索方式。</p><h3 id="倒排索引（Inverted-Index）"><a href="#倒排索引（Inverted-Index）" class="headerlink" title="倒排索引（Inverted Index）"></a>倒排索引（Inverted Index）</h3><p>该索引表中的每一项都包括一个属性值和具有该属性值的各记录的地址。由于不是由记录来确定属性值，而是由属性值来确定记录的位置，因而成为倒排索引。Elasticsearch能实现快速、高效的搜索功能，正是基于倒排索引原理。</p><h3 id="节点-amp-集群"><a href="#节点-amp-集群" class="headerlink" title="节点&amp;集群"></a>节点&amp;集群</h3><p>Elasticsearch本质上是一个分布式数据库，允许多台服务器协同工作，每台服务器可以运行多各Elasticsearch实例。单个Elasticsearch实例成为一个节点Node，一组节点构成一个集群Cluster</p><h3 id="索引"><a href="#索引" class="headerlink" title="索引"></a>索引</h3><p>Elasticsearch数据管理的顶层单位就叫做索引Index，相当于关系型数据库里的数据库的概念。另外，每个index的名字必须是小写。</p><h3 id="文档"><a href="#文档" class="headerlink" title="文档"></a>文档</h3><p>Index里面单挑的记录称为文档。许多条Document构成了一个Index。Document使用JSON格式表示。同一个Index里面的Document，不要求有相同的结构，但是最好保持相同，这样有利于提高搜索效率。</p><h3 id="类型"><a href="#类型" class="headerlink" title="类型"></a>类型</h3><p>Document可以分组，比如employee这个index里买呢，可以按部门分组，也可以按职级分组。这种分组就叫做Type，他是虚拟的逻辑分组，用来过滤Document，类似关系型数据库中的数据表。</p><p>不同的Type应该有相似的架构，性质完全不同的数据应该存成两个index，而不是一个index里面的两个type</p><h3 id="文档元数据"><a href="#文档元数据" class="headerlink" title="文档元数据"></a>文档元数据</h3><p>文档元数据为_index,_type,_id这三者可以唯一表示一个文档，_index表示文档在哪里存放，_type表示文档的对象类别，_id为文档的唯一标识。</p><h3 id="字段"><a href="#字段" class="headerlink" title="字段"></a>字段</h3><p>每个Document都类似一个JSON结构，它包含了许多字段，每个字段都有其对应的值，多个字段组成了一个Document，可以类比关系型数据库中数据表中的字段。</p><h3 id="Shards-amp-Replicas分片与副本"><a href="#Shards-amp-Replicas分片与副本" class="headerlink" title="Shards &amp; Replicas分片与副本"></a>Shards &amp; Replicas分片与副本</h3><p>索引可以存储大量的数据，这些数据可能超过单个节点的硬件限制。例如，十亿个文件占用磁盘空间1TB的单指标可能不适合对单个节点的磁盘或可能太慢服务仅从单个节点的搜索请求。</p><p>为了解决这一问题，Elasticsearch提供细分你的指标分成多个块称为分片的能力。当你创建一个索引，你可以简单地定义你想要的分片数量。每个分片本身是一个全功能的、独立的“指数”，可以托管在集群中的任何节点。</p><p>Shards分片的重要性主要体现在以下两个特征：</p><ul><li>分片允许您水平拆分或缩放内容的大小</li><li>分片允许你分配和并行操作的碎片（可能在多个节点上）从而提高性能/吞吐量</li></ul><p>这个机制中的碎片是分布式的以及其文件汇总到搜索请求是完全由ElasticSearch管理，对用户来说是透明的。</p><p>在同一个集群网络或云环境上，故障是任何时候都会出现的，拥有一个故障转移机制以防分片和结点因为某些原因离线或消失是非常有用的，并且被强烈推荐。为此，Elasticsearch允许你创建一个或多个拷贝，你的索引分片进入所谓的副本或称作复制品的分片，简称Replicas。</p><p>Replicas的重要性主要体现在以下两个特征：</p><ul><li>副本为分片或节点失败提供了高可用性。为此，需要注意的是，一个副本的分片不会分配在同一个节点作为原始的或主分片，副本是从主分片那里复制过来的。</li><li>副本允许用户扩展你的搜索量或吞吐量，因为搜索可以在所有副本上并行执行。</li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> Java </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Mycat简单学习</title>
       <link href="/2020/02/15/Mycat%E7%AE%80%E5%8D%95%E5%AD%A6%E4%B9%A0/"/>
       <url>/2020/02/15/Mycat%E7%AE%80%E5%8D%95%E5%AD%A6%E4%B9%A0/</url>
